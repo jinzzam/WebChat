@@ -44,7 +44,7 @@ app.use(function (err, req, res, next) {
 module.exports = app;
 
 io.sockets.on('connection', function (socket) {
-    socket.on('call',function (data) {
+    socket.on('call', function (data) {
         console.log(data)
     });
 });

@@ -7,16 +7,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.0/socket.io.dev.js"></script>
 </head>
 <body>
-<input type="button" onclick="clk()">
+
 </body>
 <script>
     var socket = io.connect("http://localhost:4000");
-    socket.emit('call',{pknu:'wap'});
-    socket.on('news', function (data) {
-        //console.log(data);
-        console.log('hi')
-        //socket.emit('my other event', {my: 'data'});
-    });
-
+    socket.emit('call', {pknu: 'wap'});
 </script>
 </html>
