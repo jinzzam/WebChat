@@ -6,7 +6,10 @@ router.get('/', function(req, res, next) {
   res.render('chat');
 });
 
-
+router.post('/', function (req, res) {
+    console.log(req.body.mytext);
+    res.render('chat');
+})
 module.exports = router;
 
 

@@ -8,9 +8,15 @@
 </head>
 <body>
 
+<form>
+    <label>Type what you want to say: </label>
+    <input type="text" , id="mytext">
+    <input type="submit" value="chat">
+</form>
+
 </body>
 <script>
     var socket = io.connect("http://localhost:4000");
-    socket.emit('call', {pknu: 'wap'});
+    socket.emit('call', req.body.mytext);
 </script>
 </html>
