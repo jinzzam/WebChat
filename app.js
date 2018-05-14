@@ -46,7 +46,12 @@ app.use(function (err, req, res, next) {
 module.exports = app;
 
 io.sockets.on('connection', function (socket) {
-    socket.on('call', function (data) {
+    socket.on('join:room',function (data) {
+        console.log('room'+data.roomId);
+        socket.join('room'+data.roomId);
+    });
+    socket.on('chatReq', function (data) {
         console.log(data);
+        io.sockets.in('room1').emit('chatRes',data.msg);
     });
 });
