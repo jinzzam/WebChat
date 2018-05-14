@@ -10,13 +10,14 @@
 
 <form>
     <label>Type what you want to say: </label>
-    <input type="text" , id="mytext">
+    <input type="text", id="mytext", placeholder="type anything">
     <input type="submit" value="chat">
 </form>
 
 </body>
 <script>
     var socket = io.connect("http://localhost:4000");
-    socket.emit('call', req.body.mytext);
+    var message = $('#message').val();
+    socket.emit('call', message);
 </script>
 </html>
