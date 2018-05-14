@@ -48,6 +48,5 @@ module.exports = app;
 io.sockets.on('connection', function (socket) {
     socket.on('call', function (data) {
         console.log(data);
-//        console.log(text);
     });
 });
