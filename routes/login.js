@@ -10,7 +10,7 @@ router.post('/', function (req, res, next) {
     console.log(req.body);
 
     var id = req.body.user_id;
-    var password = req.body.user_id;
+    var password = req.body.user_pw;
 
     console.log(id);
     console.log(password);
