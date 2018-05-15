@@ -6,5 +6,8 @@ router.get('/', function(req, res, next) {
     res.render('join', { title: 'Join' });
 });
 
+router.post('/', function (req, res, next) {
+
+})
 
 module.exports = router;
