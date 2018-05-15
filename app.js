@@ -14,6 +14,7 @@ var usersRouter = require('./routes/users');
 var chatRouter = require('./routes/chat');
 var loginRouter = require('./routes/login');
 var joinRouter = require('./routes/join');
+var joinFailRouter = require('./routes/joinFail');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -33,6 +34,7 @@ app.use('/users', usersRouter);
 app.use('/chat', chatRouter);
 app.use('/login', loginRouter);
 app.use('/join', joinRouter);
+app.use('/join-fail',joinFailRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
