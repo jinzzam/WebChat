@@ -18,6 +18,7 @@ var joinRouter = require('./routes/join');
 var joinFailRouter = require('./routes/joinFail');
 var noIDRouter = require('./routes/noID');
 var unmatchedPwRouter = require('./routes/unmatchedPw');
+var logoutRouter = require('./routes/logout');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -49,6 +50,7 @@ app.use('/join', joinRouter);
 app.use('/join-fail', joinFailRouter);
 app.use('/no-id', noIDRouter);
 app.use('/unmatched-pw', unmatchedPwRouter);
+app.use('/logout', logoutRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

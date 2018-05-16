@@ -3,10 +3,18 @@
 <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <script>
+        var session = req.session;
+
+        function logout(session) {
+            session.remove();
+        }
+    </script>
 </head>
 <body>
 <h1><%= title %></h1>
 <p>Welcome to <%= title %></p><br>
 <input type="button" id="gochat" name="gochat" value="Let's Chat" onclick="location.href='/chat'">
+<input type="button" id="logout" name="logout" value="logout" onclick="location.href='/logout'">
 </body>
 </html>
