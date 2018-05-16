@@ -23,6 +23,8 @@ var unmatchedPwRouter = require('./routes/unmatchedPw');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
@@ -31,6 +33,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {secure: false}
+}));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -57,14 +66,9 @@ app.use(function (err, req, res, next) {
     res.render('error');
 });
 
-module.exports = app;
 
-app.use(session({
-    secret: 'keyboard cat',
-    resave: false,
-    saveUninitialized: false,
-    cookie: {secure: false}
-}));
+
+module.exports = app;
 
 var mysql = require('mysql');
 var connection = mysql.createConnection({
