@@ -15,6 +15,8 @@ var chatRouter = require('./routes/chat');
 var loginRouter = require('./routes/login');
 var joinRouter = require('./routes/join');
 var joinFailRouter = require('./routes/joinFail');
+var noIDRouter = require('./routes/noID');
+var unmatchedPwRouter = require('./routes/unmatchedPw');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -34,7 +36,9 @@ app.use('/users', usersRouter);
 app.use('/chat', chatRouter);
 app.use('/login', loginRouter);
 app.use('/join', joinRouter);
-app.use('/join-fail',joinFailRouter);
+app.use('/join-fail', joinFailRouter);
+app.use('/no-id', noIDRouter);
+app.use('/unmatched-pw', unmatchedPwRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -64,12 +68,12 @@ var connection = mysql.createConnection({
 });
 
 io.sockets.on('connection', function (socket) {
-    socket.on('join:room',function (data) {
-        console.log('room'+data.roomId);
-        socket.join('room'+data.roomId);
+    socket.on('join:room', function (data) {
+        console.log('room' + data.roomId);
+        socket.join('room' + data.roomId);
     });
     socket.on('chatReq', function (data) {
         console.log(data);
-        io.sockets.in('room1').emit('chatRes',data.msg);
+        io.sockets.in('room1').emit('chatRes', data.msg);
     });
 });
