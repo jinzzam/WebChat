@@ -13,26 +13,20 @@ router.post('/', function (req, res, next) {
     var id = req.body.user_id;
     var password = req.body.user_pw;
 
-    console.log(id);
-    console.log(password);
-
     var selectpwsql = 'select password from user where id=?';
 
     connection.query(selectpwsql, id, function (err, rows, fields) {
-        console.log('rows :  ', rows[0].password);
-        console.log('fields : ', fields);
-        if (rows != null) {
+        if (rows[0] == null) {
+            res.redirect('/no-id');
+        } else {
             if (rows[0].password == password) {
                 //로그인 성공
                 //res.redirect('/index');
-                res.render('index', { title: 'Express' });
+                res.render('index', {title: 'Login success!'});
             } else {
                 //비밀번호 불일치
                 res.redirect('/unmatched-pw');
             }
-        } else {
-            //정보가 존재하지 않는다
-            res.redirect('/no-id');
         }
     })
 });
