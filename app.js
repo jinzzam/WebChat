@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var session = require('express-session');
 
 var app = express();
 var io = require('socket.io').listen(4000);
@@ -57,6 +58,13 @@ app.use(function (err, req, res, next) {
 });
 
 module.exports = app;
+
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {secure: false}
+}));
 
 var mysql = require('mysql');
 var connection = mysql.createConnection({
