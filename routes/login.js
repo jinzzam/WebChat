@@ -16,26 +16,24 @@ router.post('/', function (req, res, next) {
     console.log(id);
     console.log(password);
 
-    var selectpwsql = 'select password from user where id=\'' + id + '\'';
+    var selectpwsql = 'select password from user where id=?';
 
-    connection.query(selectpwsql, function (err, rows, fields) {
-        if (!err) {
-            //console.log('The solution is ', rows);
-            if (rows != null) {
-                if (rows == password) {
-                    //로그인 성공
-                    res.redirect('/index');
-                } else {
-                    //비밀번호 불일치
-                    res.redirect('/unmatched-pw');
-                }
+    connection.query(selectpwsql, id, function (err, rows, fields) {
+        console.log('rows :  ', rows[0].password);
+        console.log('fields : ', fields);
+        if (rows != null) {
+            if (rows[0].password == password) {
+                //로그인 성공
+                //res.redirect('/index');
+                res.render('index', { title: 'Express' });
             } else {
-                //정보가 존재하지 않는다
-                res.redirect('/no-id');
+                //비밀번호 불일치
+                res.redirect('/unmatched-pw');
             }
+        } else {
+            //정보가 존재하지 않는다
+            res.redirect('/no-id');
         }
-        else
-            console.log('존재하지 않는 ID 입니다.', err);
     })
 });
 
