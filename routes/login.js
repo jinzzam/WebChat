@@ -21,7 +21,6 @@ router.post('/', function (req, res, next) {
         } else {
             if (rows[0].password == password) {
                 //로그인 성공
-                //res.redirect('/index');
                 res.render('index', {title: 'Login success!'});
             } else {
                 //비밀번호 불일치
