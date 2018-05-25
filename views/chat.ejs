@@ -14,6 +14,12 @@
     <input type="text" , id="mytext" , placeholder="type anything">
     <input type="button" value="chat" onclick="clk()"><br>
     <input type="file" id="file">
+
+    <input type="file" id="fileElem" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)">
+    <a href="#" id="fileSelect">Select some files</a>
+    <div id="fileList">
+        <p>No files selected!</p>
+    </div>
 </form>
 
 </body>
@@ -32,33 +38,73 @@
         $('#chat-body').html($('#chat-body').html() + data + '\n');
     })
 
-    var upload = function (req, res) {
-        var imagePath = "public/images/";
-        var deferred = Q.defer();
-        var storage = multer.diskStorage({
-            //서버에 저장할 폴더
-            destination: function (req, file, cb) {
-                cb(null, imagePath);
-            },
 
-            //서버에 저장할 파일 명
-            filename: function (req, file, cb) {
-                file.uploadedFile = {
-                    name: req.params.filename,
-                    ext: file.mimeType.split('/')[1]
-                };
-                cb(null, file.uploadedFile.name + '.' + file.uploadedFile.ext);
+    // var upload = function (req, res) {
+    //     var imagePath = "public/images/";
+    //     var deferred = Q.defer();
+    //     var storage = multer.diskStorage({
+    //         //서버에 저장할 폴더
+    //         destination: function (req, file, cb) {
+    //             cb(null, imagePath);
+    //         },
+    //
+    //         //서버에 저장할 파일 명
+    //         filename: function (req, file, cb) {
+    //             file.uploadedFile = {
+    //                 name: req.params.filename,
+    //                 ext: file.mimeType.split('/')[1]
+    //             };
+    //             cb(null, file.uploadedFile.name + '.' + file.uploadedFile.ext);
+    //         }
+    //     });
+    //     console.log("dd");
+    //
+    //     var upload = multer({storage: storage}).single('file');
+    //     upload(req, res, function (err) {
+    //         if (err) deferred.reject();
+    //         else deferred().resolve(req.file.uploadedFile);
+    //     });
+    //     return deferred().promise;
+    // };
+
+    window.URL = window.URL || window.webkitURL;
+
+    var fileSelect = document.getElementById("fileSelect"),
+        fileElem = document.getElementById("fileElem"),
+        fileList = document.getElementById("fileList");
+
+    fileSelect.addEventListener("click", function (e) {
+        if (fileElem) {
+            fileElem.click();
+        }
+        e.preventDefault(); // prevent navigation to "#"
+    }, false);
+
+    function handleFiles(files) {
+        if (!files.length) {
+            fileList.innerHTML = "<p>No files selected!</p>";
+        } else {
+            fileList.innerHTML = "";
+            var list = document.createElement("ul");
+            fileList.appendChild(list);
+            for (var i = 0; i < files.length; i++) {
+                var li = document.createElement("li");
+                list.appendChild(li);
+
+                var img = document.createElement("img");
+                img.src = window.URL.createObjectURL(files[i]);
+                img.height = 60;
+                img.onload = function () {
+                    window.URL.revokeObjectURL(this.src);
+                }
+                li.appendChild(img);
+                var info = document.createElement("span");
+                info.innerHTML = files[i].name + ": " + files[i].size + " bytes";
+                li.appendChild(info);
             }
-        });
-        console.log("dd");
+        }
+    }
 
-        var upload = multer({storage: storage}).single('file');
-        upload(req, res, function (err) {
-            if (err) deferred.reject();
-            else deferred().resolve(req.file.uploadedFile);
-        });
-        return deferred().promise;
-    };
 
 </script>
 </html>
